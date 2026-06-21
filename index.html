@@ -85,7 +85,16 @@
     nav a:hover { color: var(--sage-dark); background: var(--sage-light); }
     @media (max-width: 640px) { nav { display: none; } }
 
-    .header-actions { display: flex; align-items: center; gap: 10px; }
+    .header-actions { display: flex; align-items: center; gap: 8px; }
+    @media (max-width: 420px) {
+      .header-inner { padding: 0 14px; }
+      .logo { font-size: 1.05rem; gap: 7px; }
+      .logo-icon { width: 32px; height: 32px; border-radius: 10px; }
+      .header-actions { gap: 6px; }
+      .btn-primary, .btn-planner { padding: 9px 12px; font-size: 0; }
+      .btn-primary i, .btn-planner i { font-size: 1.1rem; }
+      .hide-xs { display: none; }
+    }
 
     .btn-primary {
       background: var(--peach); color: var(--white); border: none;
@@ -182,6 +191,11 @@
 
     /* ── SECTION COMMON ── */
     section { padding: 72px 24px; }
+    @media (max-width: 480px) {
+      section { padding: 48px 16px; }
+      .hero { padding: 40px 16px 48px; }
+      .section-sub { margin-bottom: 32px; }
+    }
     .section-inner { max-width: 1120px; margin: 0 auto; }
     .section-label {
       font-size: 0.74rem; font-weight: 800; letter-spacing: .12em;
@@ -205,6 +219,7 @@
       gap: 20px;
     }
     @media (min-width: 960px) { .products-grid { grid-template-columns: repeat(4, 1fr); } }
+    @media (max-width: 380px) { .products-grid { grid-template-columns: 1fr; } }
     .product-slide {
       background: var(--cream); border-radius: var(--radius-xl);
       overflow: hidden; border: 1px solid var(--border);
@@ -482,6 +497,7 @@
       appearance: none; cursor: pointer; transition: border-color .2s;
     }
     .nbhood-select:focus { outline: none; border-color: var(--sage); }
+    .address-textarea { resize: vertical; font-family: inherit; line-height: 1.5; min-height: 64px; }
 
     .product-card {
       background: white; border-radius: var(--radius-sm);
@@ -629,6 +645,11 @@
 
     /* Grid */
     .week-grid { min-width: 480px; }
+    @media (max-width: 480px) {
+      .week-grid { min-width: 420px; }
+      .week-grid-header, .wg-row { grid-template-columns: 50px repeat(5, 1fr); gap: 4px; }
+      .wg-cell { min-height: 60px; }
+    }
     .week-grid-header {
       display: grid; grid-template-columns: 64px repeat(5, 1fr);
       gap: 5px; margin-bottom: 5px;
@@ -940,7 +961,7 @@
       <div class="diff-card fade-up" style="transition-delay:.07s"><div class="diff-icon"><i class="ph ph-plant ph-xl"></i></div><h3>Ingredientes Frescos</h3><p>Compras diárias com produtores locais de Uberlândia e região.</p></div>
       <div class="diff-card fade-up" style="transition-delay:.14s"><div class="diff-icon"><i class="ph ph-prohibit ph-xl"></i></div><h3>Zero Ultraprocessados</h3><p>Sem corantes artificiais, conservantes ou aditivos químicos.</p></div>
       <div class="diff-card fade-up" style="transition-delay:.21s"><div class="diff-icon"><i class="ph ph-scales ph-xl"></i></div><h3>Refeições Balanceadas</h3><p>Macro e micronutrientes adequados para cada faixa etária.</p></div>
-      <div class="diff-card fade-up" style="transition-delay:.28s"><div class="diff-icon"><i class="ph ph-school ph-xl"></i></div><h3>Entrega na Escola</h3><p>Cobrimos as principais escolas e bairros de Uberlândia.</p></div>
+      <div class="diff-card fade-up" style="transition-delay:.28s"><div class="diff-icon"><i class="ph ph-graduation-cap ph-xl"></i></div><h3>Entrega na Escola</h3><p>Cobrimos as principais escolas e bairros de Uberlândia.</p></div>
       <div class="diff-card fade-up" style="transition-delay:.35s"><div class="diff-icon"><i class="ph ph-recycle ph-xl"></i></div><h3>Embalagem Sustentável</h3><p>Materiais biodegradáveis e livres de BPA para proteger seus filhos e o planeta.</p></div>
     </div>
   </div>
@@ -1041,10 +1062,8 @@
       </div>
     </div>
     <div class="nbhood-section">
-      <div class="filter-label">Bairro de Entrega</div>
-      <select class="nbhood-select" id="nbhoodSelect">
-        <option value="">Selecione seu bairro…</option>
-      </select>
+      <div class="filter-label">Endereço de Entrega</div>
+      <textarea class="nbhood-select address-textarea" id="addressInput" rows="3" placeholder="Rua, número, bairro, CEP e complemento…"></textarea>
     </div>
     <div id="productList"></div>
   </div>
@@ -1084,6 +1103,10 @@
 
     <!-- Grid panel -->
     <div class="planner-grid-panel">
+      <div class="nbhood-section" style="margin-bottom:14px">
+        <div class="filter-label">Endereço de Entrega</div>
+        <textarea class="nbhood-select address-textarea" id="plannerAddressInput" rows="2" placeholder="Rua, número, bairro, CEP e complemento…"></textarea>
+      </div>
       <div class="week-grid" id="weekGrid">
         <div class="week-grid-header" id="wgHeader">
           <div></div><!-- spacer -->
@@ -1134,21 +1157,12 @@
 // ══════════════════════════════════════════════
 const WHATSAPP_NUMBER = '5534999999999';
 
-const NEIGHBORHOODS = [
-  { id: 'santa_monica', name: 'Santa Mônica', fee: 7.00 },
-  { id: 'centro', name: 'Centro', fee: 5.00 },
-  { id: 'finotti', name: 'Finotti', fee: 6.00 },
-  { id: 'granja_marileusa', name: 'Granja Marileusa', fee: 10.00 },
-  { id: 'tibery', name: 'Tibery', fee: 7.00 },
-  { id: 'shopping_park', name: 'Shopping Park', fee: 9.00 },
-];
-
 const PRODUCTS = [
   {
     id: 'eq_kids', name: 'Lancheira Equilíbrio Kids',
     desc: 'Frutas da estação, proteína grelhada, cereal integral e suco natural.',
     price: 19.90, tags: ['zero-lactose','organic'],
-    icon: 'ph-lunch-box',
+    icon: 'ph-bowl-food',
     img: 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=480&q=80',
     bestseller: true
   },
@@ -1227,7 +1241,7 @@ const TAG_LABELS = {
 // ══════════════════════════════════════════════
 const state = {
   activeFilters: new Set(),
-  neighborhood: null,
+  address: '',
   cart: {},
   planner: {},   // planner['morning_0'] = productId
   menuActiveFilter: 'all',
@@ -1240,6 +1254,46 @@ const state = {
 const fmt = n => n.toFixed(2).replace('.', ',');
 const getCartSubtotal = () => PRODUCTS.reduce((s,p) => s + (state.cart[p.id]||0)*p.price, 0);
 const getCartCount = () => Object.values(state.cart).reduce((a,b) => a+b, 0);
+
+// ══════════════════════════════════════════════
+// CART PERSISTENCE (localStorage)
+// ══════════════════════════════════════════════
+const CART_STORAGE_KEY = 'nutri4kids_cart_v1';
+const ADDRESS_STORAGE_KEY = 'nutri4kids_address_v1';
+
+function saveCartToStorage() {
+  try {
+    localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(state.cart));
+    localStorage.setItem(ADDRESS_STORAGE_KEY, state.address || '');
+  } catch (err) {
+    console.warn('Não foi possível salvar o carrinho:', err);
+  }
+}
+
+function loadCartFromStorage() {
+  try {
+    const raw = localStorage.getItem(CART_STORAGE_KEY);
+    if (raw) {
+      const saved = JSON.parse(raw);
+      if (saved && typeof saved === 'object') {
+        // Only keep entries for products that still exist
+        Object.entries(saved).forEach(([id, qty]) => {
+          if (PRODUCTS.some(p => p.id === id) && Number(qty) > 0) {
+            state.cart[id] = Number(qty);
+          }
+        });
+      }
+    }
+  } catch (err) {
+    console.warn('Não foi possível carregar o carrinho salvo:', err);
+  }
+  try {
+    const savedAddress = localStorage.getItem(ADDRESS_STORAGE_KEY);
+    if (savedAddress) state.address = savedAddress;
+  } catch (err) {
+    console.warn('Não foi possível carregar o endereço salvo:', err);
+  }
+}
 
 function scrollToCenter(el) {
   const rect = el.getBoundingClientRect();
@@ -1320,16 +1374,14 @@ function initDrawer() {
   overlay.addEventListener('click', closeDrawer);
 }
 
-function populateNeighborhoods() {
-  const sel = document.getElementById('nbhoodSelect');
-  NEIGHBORHOODS.forEach(n => {
-    const opt = document.createElement('option');
-    opt.value = n.id;
-    opt.textContent = `${n.name} — taxa R$ ${fmt(n.fee)}`;
-    sel.appendChild(opt);
-  });
-  sel.addEventListener('change', () => {
-    state.neighborhood = NEIGHBORHOODS.find(n => n.id === sel.value) || null;
+function initAddressInput() {
+  const input = document.getElementById('addressInput');
+  if (!input) return;
+  input.value = state.address || '';
+  input.addEventListener('input', () => {
+    state.address = input.value;
+    const plannerAddr = document.getElementById('plannerAddressInput');
+    if (plannerAddr) plannerAddr.value = state.address;
     renderCart();
   });
 }
@@ -1430,13 +1482,13 @@ function updateQtyDisplay(id) {
 }
 
 function renderCart() {
+  saveCartToStorage();
   const summary = document.getElementById('cartSummary');
   const btn = document.getElementById('whatsappBtn');
   const badge = document.getElementById('cartBadge');
   const count = getCartCount();
   const subtotal = getCartSubtotal();
-  const fee = state.neighborhood?.fee ?? null;
-  const total = subtotal + (fee || 0);
+  const hasAddress = !!state.address.trim();
 
   badge.textContent = count;
   badge.classList.toggle('hidden', count === 0);
@@ -1451,28 +1503,23 @@ function renderCart() {
     if (!qty) return;
     html += `<div class="cart-row"><span>${qty}× ${p.name}</span><span>R$ ${fmt(qty*p.price)}</span></div>`;
   });
-  html += `<div class="cart-row"><span>Subtotal</span><span>R$ ${fmt(subtotal)}</span></div>`;
-  if (fee !== null) {
-    html += `<div class="cart-row"><span>Taxa (${state.neighborhood.name})</span><span>R$ ${fmt(fee)}</span></div>`;
-    html += `<div class="cart-row total"><span>TOTAL</span><span>R$ ${fmt(total)}</span></div>`;
-  } else {
-    html += `<div class="cart-row" style="color:var(--gray);font-size:.78rem"><span>Selecione o bairro para calcular a taxa</span></div>`;
+  html += `<div class="cart-row total"><span>TOTAL</span><span>R$ ${fmt(subtotal)}</span></div>`;
+  if (!hasAddress) {
+    html += `<div class="cart-row" style="color:var(--gray);font-size:.78rem"><span>Preencha o endereço de entrega para finalizar</span></div>`;
   }
   summary.innerHTML = html;
-  btn.disabled = !state.neighborhood;
+  btn.disabled = !hasAddress;
   btn.onclick = sendWhatsApp;
 }
 
 function sendWhatsApp() {
   const subtotal = getCartSubtotal();
-  const fee = state.neighborhood.fee;
-  const total = subtotal + fee;
   let lines = ['NOVO PEDIDO - Nutri4kids',''];
   PRODUCTS.forEach(p => {
     const qty = state.cart[p.id];
     if (qty) lines.push(`${qty}x ${p.name}  R$ ${fmt(qty*p.price)}`);
   });
-  lines.push('','---','',`Subtotal: R$ ${fmt(subtotal)}`,`Taxa (${state.neighborhood.name}): R$ ${fmt(fee)}`,`TOTAL: R$ ${fmt(total)}`,'','---','','Endereço: (preencher)','','Pagamento: Pix/Cartão/Dinheiro');
+  lines.push('','---','',`TOTAL: R$ ${fmt(subtotal)}`,'','---','',`Endereço: ${state.address.trim()}`,'','Pagamento: Pix/Cartão/Dinheiro');
   window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(lines.join('\n'))}`, '_blank');
 }
 
@@ -1480,14 +1527,17 @@ function sendWhatsApp() {
 // MEAL PLANNER — refactored
 // ══════════════════════════════════════════════
 const PLANNER_DAYS  = ['Seg','Ter','Qua','Qui','Sex'];  // Mon–Fri (school week)
-const PLANNER_MEALS = [
-  { id: 'manha',  label: 'Manhã',  sub: 'café da manhã' },
-  { id: 'lanche', label: 'Lanche', sub: 'lanche escolar' },
-  { id: 'almoco', label: 'Almoço', sub: 'almoço' },
+const PLANNER_SLOTS = [
+  { id: 'op1', label: 'Opção 1' },
+  { id: 'op2', label: 'Opção 2' },
+  { id: 'op3', label: 'Opção 3' },
+  { id: 'op4', label: 'Opção 4' },
+  { id: 'op5', label: 'Opção 5' },
+  { id: 'op6', label: 'Opção 6' },
 ];
 
 let plannerWeekOffset = 0;     // 0 = current week, -1 = last week, +1 = next week
-let activePlannerCell = null;  // { key, dayLabel, mealLabel }
+let activePlannerCell = null;  // { key, dayLabel, slotLabel }
 
 function getPlannerWeekLabel(offset) {
   const now = new Date();
@@ -1502,8 +1552,8 @@ function getPlannerWeekLabel(offset) {
   return `Semana ${offset > 0 ? '+' : ''}${offset}`;
 }
 
-function plannerKey(mealId, dayIdx) {
-  return `planner_w${plannerWeekOffset}_${mealId}_${dayIdx}`;
+function plannerKey(slotId, dayIdx) {
+  return `planner_w${plannerWeekOffset}_${slotId}_${dayIdx}`;
 }
 
 function initPlanner() {
@@ -1517,6 +1567,8 @@ function initPlanner() {
     buildPlannerGrid();
     renderPickerList();
     updatePlannerFooter();
+    const addrInput = document.getElementById('plannerAddressInput');
+    if (addrInput) addrInput.value = state.address || '';
   };
   const closePlanner = () => {
     overlay.classList.remove('open');
@@ -1549,6 +1601,15 @@ function initPlanner() {
 
   // Search
   document.getElementById('pickerSearch').addEventListener('input', renderPickerList);
+
+  // Address (shared with cart drawer)
+  document.getElementById('plannerAddressInput')?.addEventListener('input', e => {
+    state.address = e.target.value;
+    const cartAddr = document.getElementById('addressInput');
+    if (cartAddr) cartAddr.value = state.address;
+    saveCartToStorage();
+    updatePlannerFooter();
+  });
 
   // Clear
   document.getElementById('plannerClearBtn').addEventListener('click', () => {
@@ -1583,22 +1644,22 @@ function buildPlannerGrid() {
   const rows = document.getElementById('wgRows');
   rows.innerHTML = '';
 
-  PLANNER_MEALS.forEach(meal => {
+  PLANNER_SLOTS.forEach(slot => {
     const row = document.createElement('div');
     row.className = 'wg-row';
 
     const labelEl = document.createElement('div');
     labelEl.className = 'wg-row-label';
-    labelEl.innerHTML = `${meal.label}<small>${meal.sub}</small>`;
+    labelEl.innerHTML = slot.label;
     row.appendChild(labelEl);
 
     PLANNER_DAYS.forEach((day, dayIdx) => {
-      const key  = plannerKey(meal.id, dayIdx);
+      const key  = plannerKey(slot.id, dayIdx);
       const cell = document.createElement('div');
       cell.className = 'wg-cell';
       cell.dataset.key = key;
 
-      cell.addEventListener('click', () => selectPlannerCell(cell, key, day, meal.label));
+      cell.addEventListener('click', () => selectPlannerCell(cell, key, day, slot.label));
       renderPlannerCell(cell, key);
       row.appendChild(cell);
     });
@@ -1633,10 +1694,10 @@ function renderPlannerCell(cell, key) {
   }
 }
 
-function selectPlannerCell(cell, key, dayLabel, mealLabel) {
+function selectPlannerCell(cell, key, dayLabel, slotLabel) {
   // Deactivate previous
   document.querySelectorAll('.wg-cell.active-pick').forEach(c => c.classList.remove('active-pick'));
-  activePlannerCell = { key, dayLabel, mealLabel };
+  activePlannerCell = { key, dayLabel, slotLabel };
   cell.classList.add('active-pick');
   updatePickerCellLabel();
   renderPickerList();
@@ -1647,7 +1708,7 @@ function selectPlannerCell(cell, key, dayLabel, mealLabel) {
 function updatePickerCellLabel() {
   const el = document.getElementById('pickerCellLabel');
   if (activePlannerCell) {
-    el.textContent = `${activePlannerCell.dayLabel} — ${activePlannerCell.mealLabel}`;
+    el.textContent = `${activePlannerCell.dayLabel} — ${activePlannerCell.slotLabel}`;
     el.style.color = 'var(--sage-dark)';
     el.style.fontWeight = '800';
   } else {
@@ -1714,18 +1775,20 @@ function updatePlannerFooter() {
   });
   document.getElementById('plannerSlotsFilled').textContent = slots;
   document.getElementById('plannerWeekTotal').textContent = `R$ ${fmt(total)}`;
-  document.getElementById('plannerWaBtn').disabled = slots === 0;
+  document.getElementById('plannerWaBtn').disabled = slots === 0 || !state.address.trim();
 }
 
 function sendPlannerWhatsApp() {
   const lines = ['🥗 PLANEJAMENTO SEMANAL — Nutri4Kids', ''];
-  PLANNER_MEALS.forEach(meal => {
-    lines.push(`*${meal.label.toUpperCase()}*`);
-    PLANNER_DAYS.forEach((day, idx) => {
-      const pid = state.planner[plannerKey(meal.id, idx)];
-      const p   = pid ? PRODUCTS.find(x => x.id === pid) : null;
-      lines.push(`  ${day}: ${p ? `${p.name} — R$ ${fmt(p.price)}` : '—'}`);
-    });
+  PLANNER_DAYS.forEach((day, dayIdx) => {
+    const items = PLANNER_SLOTS
+      .map(slot => state.planner[plannerKey(slot.id, dayIdx)])
+      .filter(Boolean)
+      .map(pid => PRODUCTS.find(x => x.id === pid))
+      .filter(Boolean);
+    if (items.length === 0) return;
+    lines.push(`*${day.toUpperCase()}*`);
+    items.forEach(p => lines.push(`  • ${p.name} — R$ ${fmt(p.price)}`));
     lines.push('');
   });
   let total = 0;
@@ -1735,6 +1798,7 @@ function sendPlannerWhatsApp() {
     if (p) total += p.price;
   });
   lines.push(`💰 Total estimado: R$ ${fmt(total)}`, '', 'Semana: ' + getPlannerWeekLabel(plannerWeekOffset));
+  lines.push('', `Endereço: ${state.address.trim() || '(não informado)'}`);
   window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(lines.join('\n'))}`, '_blank');
 }
 
@@ -1830,7 +1894,8 @@ function initAnimations() {
 // INIT
 // ══════════════════════════════════════════════
 document.addEventListener('DOMContentLoaded', () => {
-  populateNeighborhoods();
+  loadCartFromStorage();
+  initAddressInput();
   initFilters();
   renderProducts();
   renderCart();
