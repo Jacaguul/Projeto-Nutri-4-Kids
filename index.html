@@ -7,6 +7,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <!-- Phosphor Icons -->
+  <script src="https://unpkg.com/@phosphor-icons/web@2.1.1/src/index.js"></script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -35,6 +37,14 @@
       overflow-x: hidden;
     }
 
+    /* Phosphor icon sizing helpers */
+    i.ph { display: inline-flex; align-items: center; justify-content: center; }
+    i.ph-lg  { font-size: 1.5rem; }
+    i.ph-xl  { font-size: 2rem; }
+    i.ph-2xl { font-size: 2.5rem; }
+    i.ph-sm  { font-size: 1.1rem; }
+    i.ph-xs  { font-size: 0.9rem; }
+
     /* ── HEADER ── */
     header {
       position: fixed; top: 0; left: 0; right: 0; z-index: 100;
@@ -55,7 +65,7 @@
     .logo-icon {
       width: 36px; height: 36px; background: var(--sage);
       border-radius: 10px; display: flex; align-items: center; justify-content: center;
-      font-size: 1.1rem;
+      color: white;
     }
     nav { display: flex; gap: 24px; }
     nav a {
@@ -69,6 +79,7 @@
       padding: 10px 20px; border-radius: 50px; font-family: inherit;
       font-weight: 800; font-size: 0.9rem; cursor: pointer;
       transition: background .2s, transform .1s;
+      display: inline-flex; align-items: center; gap: 6px;
     }
     .btn-primary:hover { background: var(--peach-dark); transform: translateY(-1px); }
     .btn-primary:active { transform: translateY(0); }
@@ -101,6 +112,7 @@
       background: transparent; color: var(--sage-dark); border: 2px solid var(--sage);
       padding: 10px 20px; border-radius: 50px; font-family: inherit;
       font-weight: 700; font-size: 0.9rem; cursor: pointer; transition: all .2s;
+      display: inline-flex; align-items: center; gap: 6px; text-decoration: none;
     }
     .btn-secondary:hover { background: var(--sage-light); }
     .hero-trust {
@@ -126,7 +138,7 @@
       display: flex; align-items: center; gap: 8px;
       box-shadow: 0 4px 20px rgba(0,0,0,0.12);
     }
-    .hero-pill .pill-icon { font-size: 1.4rem; }
+    .hero-pill .pill-icon { color: var(--peach); display: flex; align-items: center; }
     .hero-pill .pill-label { font-size: 0.75rem; color: var(--muted); font-weight: 600; }
     .hero-pill .pill-val { font-size: 0.9rem; font-weight: 800; color: var(--charcoal); }
 
@@ -176,7 +188,7 @@
     }
     .story-meta-avatar {
       width: 48px; height: 48px; border-radius: 50%; background: var(--sage-light);
-      display: flex; align-items: center; justify-content: center; font-size: 1.4rem;
+      display: flex; align-items: center; justify-content: center; color: var(--sage-dark);
     }
     .story-meta-name { font-weight: 800; font-size: 0.95rem; }
     .story-meta-role { font-size: 0.8rem; color: var(--muted); font-weight: 600; }
@@ -197,15 +209,12 @@
       font-size: 2.5rem; font-weight: 900; color: var(--sage-light);
       line-height: 1; margin-bottom: 12px;
     }
-    .how-icon { font-size: 2rem; margin-bottom: 12px; }
+    .how-icon {
+      font-size: 2rem; margin-bottom: 12px;
+      color: var(--sage); display: flex;
+    }
     .how-card h3 { font-size: 1.1rem; font-weight: 800; margin-bottom: 6px; }
     .how-card p { font-size: 0.88rem; color: var(--muted); font-weight: 500; }
-    .how-arrow {
-      display: none;
-    }
-    @media (min-width: 640px) {
-      .how-arrow { display: flex; align-items: center; justify-content: center; font-size: 1.5rem; color: var(--sage); }
-    }
 
     /* ── DIFFERENTIATORS ── */
     .diff { background: var(--sage); }
@@ -220,7 +229,10 @@
       background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2);
       border-radius: var(--radius); padding: 24px 20px;
     }
-    .diff-icon { font-size: 2rem; margin-bottom: 10px; }
+    .diff-icon {
+      font-size: 2rem; margin-bottom: 10px;
+      color: rgba(255,255,255,0.9); display: flex;
+    }
     .diff-card h3 { font-weight: 800; font-size: 1rem; color: white; margin-bottom: 4px; }
     .diff-card p { font-size: 0.82rem; color: rgba(255,255,255,0.75); font-weight: 500; }
 
@@ -236,7 +248,7 @@
       gap: 10px; transition: box-shadow .2s;
     }
     .partner-card:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
-    .partner-icon { font-size: 2.2rem; }
+    .partner-icon { color: var(--sage); display: flex; }
     .partner-name { font-size: 0.82rem; font-weight: 700; color: var(--charcoal); text-align: center; }
     .partner-cat { font-size: 0.72rem; color: var(--muted); font-weight: 600; }
 
@@ -253,25 +265,24 @@
     }
     @media (min-width: 768px) { .testimonial-card { flex: 0 0 calc(50% - 20px); } }
     @media (min-width: 1024px) { .testimonial-card { flex: 0 0 calc(33.33% - 20px); } }
-    .t-stars { color: #F4A95A; font-size: 1rem; margin-bottom: 10px; }
+    .t-stars { color: var(--peach); font-size: 1rem; margin-bottom: 10px; display: flex; gap: 2px; }
     .t-text { font-size: 0.9rem; color: var(--charcoal); font-weight: 500; margin-bottom: 16px; line-height: 1.55; }
     .t-author { display: flex; align-items: center; gap: 10px; }
     .t-avatar {
       width: 42px; height: 42px; border-radius: 50%;
-      object-fit: cover; background: var(--sage-light);
-      display: flex; align-items: center; justify-content: center; font-size: 1.4rem;
+      background: var(--sage-light); color: var(--sage-dark);
+      display: flex; align-items: center; justify-content: center;
     }
     .t-name { font-weight: 800; font-size: 0.88rem; }
     .t-role { font-size: 0.75rem; color: var(--muted); font-weight: 600; }
     .carousel-controls {
-      display: flex; justify-content: center; gap: 12px; margin-top: 28px;
+      display: flex; justify-content: center; gap: 12px; margin-top: 28px; align-items: center;
     }
     .carousel-btn {
       width: 40px; height: 40px; border-radius: 50%;
       border: 2px solid var(--border); background: white;
-      cursor: pointer; font-size: 1.1rem;
-      display: flex; align-items: center; justify-content: center;
-      transition: all .2s;
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      transition: all .2s; color: var(--charcoal);
     }
     .carousel-btn:hover { background: var(--sage); border-color: var(--sage); color: white; }
     .carousel-dots { display: flex; gap: 6px; align-items: center; }
@@ -288,28 +299,32 @@
       display: grid; grid-template-columns: 1fr; gap: 40px; margin-bottom: 40px;
     }
     @media (min-width: 640px) { .footer-grid { grid-template-columns: 2fr 1fr 1fr; } }
-    .footer-logo { font-size: 1.2rem; font-weight: 900; color: white; margin-bottom: 10px; }
+    .footer-logo {
+      font-size: 1.2rem; font-weight: 900; color: white; margin-bottom: 10px;
+      display: flex; align-items: center; gap: 8px;
+    }
     .footer-tagline { font-size: 0.85rem; max-width: 260px; line-height: 1.6; }
     .footer-col h4 { font-size: 0.85rem; font-weight: 800; color: white; margin-bottom: 14px; letter-spacing: .04em; }
     .footer-col a, .footer-col p {
-      display: block; font-size: 0.83rem; color: rgba(255,255,255,0.65);
+      display: flex; align-items: center; gap: 7px;
+      font-size: 0.83rem; color: rgba(255,255,255,0.65);
       text-decoration: none; margin-bottom: 8px; font-weight: 500; transition: color .2s;
     }
     .footer-col a:hover { color: var(--peach); }
     .footer-bottom {
       border-top: 1px solid rgba(255,255,255,0.1);
       padding-top: 24px; display: flex; justify-content: space-between;
-      align-items: center; flex-wrap: gap; gap: 12px;
+      align-items: center; flex-wrap: wrap; gap: 12px;
       font-size: 0.8rem; color: rgba(255,255,255,0.4);
     }
     .social-links { display: flex; gap: 12px; }
     .social-btn {
       width: 36px; height: 36px; border-radius: 10px;
       background: rgba(255,255,255,0.08); display: flex; align-items: center;
-      justify-content: center; text-decoration: none; font-size: 1rem;
+      justify-content: center; text-decoration: none; color: rgba(255,255,255,0.8);
       transition: background .2s;
     }
-    .social-btn:hover { background: var(--sage); }
+    .social-btn:hover { background: var(--sage); color: white; }
 
     /* ── DRAWER ── */
     .drawer-overlay {
@@ -332,12 +347,15 @@
       padding: 20px 24px; border-bottom: 1px solid var(--border);
       background: white;
     }
-    .drawer-title { font-weight: 900; font-size: 1.15rem; }
+    .drawer-title {
+      font-weight: 900; font-size: 1.15rem;
+      display: flex; align-items: center; gap: 8px; color: var(--sage-dark);
+    }
     .drawer-close {
       width: 36px; height: 36px; border-radius: 50%; border: none;
-      background: var(--border); cursor: pointer; font-size: 1.1rem;
+      background: var(--border); cursor: pointer;
       display: flex; align-items: center; justify-content: center;
-      transition: background .2s;
+      transition: background .2s; color: var(--charcoal);
     }
     .drawer-close:hover { background: #d1d5db; }
     .drawer-body { flex: 1; overflow-y: auto; padding: 24px; }
@@ -391,8 +409,9 @@
     }
     .qty-btn {
       width: 30px; height: 30px; border-radius: 50%; border: none;
-      background: var(--sage-light); color: var(--sage-dark); font-size: 1.1rem;
-      font-weight: 800; cursor: pointer; display: flex; align-items: center; justify-content: center;
+      background: var(--sage-light); color: var(--sage-dark);
+      font-size: 1.1rem; font-weight: 800; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
       transition: background .2s;
     }
     .qty-btn:hover { background: var(--sage); color: white; }
@@ -438,7 +457,9 @@
 <header>
   <div class="header-inner">
     <a href="#" class="logo">
-      <div class="logo-icon">🥗</div>
+      <div class="logo-icon">
+        <i class="ph ph-leaf ph-lg"></i>
+      </div>
       Nutri4Kids
     </a>
     <nav>
@@ -447,7 +468,9 @@
       <a href="#parceiros">Parceiros</a>
     </nav>
     <div class="cart-badge-wrap">
-      <button class="btn-primary" id="openDrawerBtn">Ver Cardápio</button>
+      <button class="btn-primary" id="openDrawerBtn">
+        <i class="ph ph-book-open-text"></i> Ver Cardápio
+      </button>
       <span class="cart-badge hidden" id="cartBadge">0</span>
     </div>
   </div>
@@ -457,15 +480,17 @@
 <section style="padding-top:0; padding-bottom:0; background: var(--cream);">
   <div class="hero">
     <div class="hero-content fade-up">
-      <div class="hero-badge">🌿 Feito com carinho em Uberlândia</div>
+      <div class="hero-badge">
+        <i class="ph ph-map-pin ph-xs"></i> Feito com carinho em Uberlândia
+      </div>
       <h1>Lancheiras <span>saudáveis</span> que as crianças adoram</h1>
       <p>Receitas aprovadas por nutricionista, com ingredientes frescos e sem ultraprocessados — entregues na escola ou em casa.</p>
       <div class="hero-ctas">
         <button class="btn-primary" id="openDrawerBtn2" style="font-size:1rem; padding:13px 26px;">
-          🛒 Ver Cardápio
+          <i class="ph ph-shopping-cart"></i> Ver Cardápio
         </button>
-        <a href="https://wa.me/5534999999999" target="_blank" class="btn-secondary" style="font-size:1rem; padding:13px 26px; display:inline-flex; align-items:center; gap:6px;">
-          💬 Falar no WhatsApp
+        <a href="https://wa.me/5534999999999" target="_blank" class="btn-secondary" style="font-size:1rem; padding:13px 26px;">
+          <i class="ph ph-whatsapp-logo"></i> Falar no WhatsApp
         </a>
       </div>
       <div class="hero-trust">
@@ -477,7 +502,7 @@
     <div class="hero-image-wrap fade-up" style="transition-delay:.15s">
       <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=700&q=80" alt="Lancheira saudável colorida" loading="lazy" />
       <div class="hero-pill">
-        <div class="pill-icon">⭐</div>
+        <div class="pill-icon"><i class="ph ph-star ph-fill" style="font-size:1.4rem; color:var(--peach)"></i></div>
         <div>
           <div class="pill-val">4.9 / 5</div>
           <div class="pill-label">+120 famílias satisfeitas</div>
@@ -515,7 +540,9 @@
           Cada lancheira é montada com cuidado, usando ingredientes frescos de produtores locais de Uberlândia. Nossa missão é tornar a alimentação infantil mais nutritiva, gostosa e conveniente para as famílias.
         </p>
         <div class="story-meta">
-          <div class="story-meta-avatar">👩‍⚕️</div>
+          <div class="story-meta-avatar">
+            <i class="ph ph-user-circle ph-xl"></i>
+          </div>
           <div>
             <div class="story-meta-name">Ana Paula Ferreira</div>
             <div class="story-meta-role">Fundadora & Nutricionista — CRN-6 12345</div>
@@ -535,19 +562,19 @@
     <div class="how-steps">
       <div class="how-card fade-up">
         <div class="how-num">01</div>
-        <div class="how-icon">🥗</div>
+        <div class="how-icon"><i class="ph ph-fork-knife ph-xl"></i></div>
         <h3>Escolha os itens</h3>
         <p>Navegue pelo cardápio, filtre por restrições alimentares e monte a lancheira ideal para o seu filho.</p>
       </div>
       <div class="how-card fade-up" style="transition-delay:.1s">
         <div class="how-num">02</div>
-        <div class="how-icon">💬</div>
+        <div class="how-icon"><i class="ph ph-chat-circle-dots ph-xl"></i></div>
         <h3>Peça pelo WhatsApp</h3>
         <p>Clique em "Finalizar Pedido" e seu pedido chega pronto para o nosso WhatsApp, sem digitação manual.</p>
       </div>
       <div class="how-card fade-up" style="transition-delay:.2s">
         <div class="how-num">03</div>
-        <div class="how-icon">🚚</div>
+        <div class="how-icon"><i class="ph ph-truck ph-xl"></i></div>
         <h3>Receba em casa ou escola</h3>
         <p>Entregamos na sua casa ou diretamente na escola do seu filho, nos horários combinados.</p>
       </div>
@@ -570,32 +597,32 @@
     <p class="section-sub" style="margin-bottom:40px">Compromisso com saúde, sabor e conveniência em cada lancheira.</p>
     <div class="diff-grid">
       <div class="diff-card fade-up">
-        <div class="diff-icon">🩺</div>
+        <div class="diff-icon"><i class="ph ph-stethoscope ph-xl"></i></div>
         <h3>Aprovado por Nutricionista</h3>
         <p>Cardápio elaborado e supervisionado por nutricionista registrada.</p>
       </div>
       <div class="diff-card fade-up" style="transition-delay:.07s">
-        <div class="diff-icon">🌱</div>
+        <div class="diff-icon"><i class="ph ph-plant ph-xl"></i></div>
         <h3>Ingredientes Frescos</h3>
         <p>Compras diárias com produtores locais de Uberlândia e região.</p>
       </div>
       <div class="diff-card fade-up" style="transition-delay:.14s">
-        <div class="diff-icon">🚫</div>
+        <div class="diff-icon"><i class="ph ph-prohibit ph-xl"></i></div>
         <h3>Zero Ultraprocessados</h3>
         <p>Sem corantes artificiais, conservantes ou aditivos químicos.</p>
       </div>
       <div class="diff-card fade-up" style="transition-delay:.21s">
-        <div class="diff-icon">⚖️</div>
+        <div class="diff-icon"><i class="ph ph-scales ph-xl"></i></div>
         <h3>Refeições Balanceadas</h3>
         <p>Macro e micronutrientes adequados para cada faixa etária.</p>
       </div>
       <div class="diff-card fade-up" style="transition-delay:.28s">
-        <div class="diff-icon">📍</div>
+        <div class="diff-icon"><i class="ph ph-school ph-xl"></i></div>
         <h3>Entrega na Escola</h3>
         <p>Cobrimos as principais escolas e bairros de Uberlândia.</p>
       </div>
       <div class="diff-card fade-up" style="transition-delay:.35s">
-        <div class="diff-icon">♻️</div>
+        <div class="diff-icon"><i class="ph ph-recycle ph-xl"></i></div>
         <h3>Embalagem Sustentável</h3>
         <p>Materiais biodegradáveis e livres de BPA para proteger seus filhos e o planeta.</p>
       </div>
@@ -618,22 +645,22 @@
     <p class="section-sub">Escolas, clínicas e instituições que recomendam nosso serviço.</p>
     <div class="partners-grid">
       <div class="partner-card fade-up">
-        <div class="partner-icon">🏫</div>
+        <div class="partner-icon"><i class="ph ph-buildings ph-2xl"></i></div>
         <div class="partner-name">Colégio Santa Inês</div>
         <div class="partner-cat">Escola Parceira</div>
       </div>
       <div class="partner-card fade-up" style="transition-delay:.07s">
-        <div class="partner-icon">🏫</div>
+        <div class="partner-icon"><i class="ph ph-buildings ph-2xl"></i></div>
         <div class="partner-name">Escola Estadual Brasil</div>
         <div class="partner-cat">Escola Parceira</div>
       </div>
       <div class="partner-card fade-up" style="transition-delay:.14s">
-        <div class="partner-icon">🏥</div>
+        <div class="partner-icon"><i class="ph ph-first-aid-kit ph-2xl"></i></div>
         <div class="partner-name">Clínica Bem-Estar Kids</div>
         <div class="partner-cat">Saúde & Bem-estar</div>
       </div>
       <div class="partner-card fade-up" style="transition-delay:.21s">
-        <div class="partner-icon">🌿</div>
+        <div class="partner-icon"><i class="ph ph-flower ph-2xl"></i></div>
         <div class="partner-name">Horta do Cerrado</div>
         <div class="partner-cat">Fornecedor Orgânico</div>
       </div>
@@ -648,14 +675,12 @@
     <h2 class="section-title">O que as famílias dizem</h2>
     <p class="section-sub">Mais de 120 famílias em Uberlândia já confiam na Nutri4Kids.</p>
     <div class="carousel-wrap" id="carousel">
-      <div class="carousel-track" id="carouselTrack">
-        <!-- Cards injected by JS -->
-      </div>
+      <div class="carousel-track" id="carouselTrack"></div>
     </div>
     <div class="carousel-controls">
-      <button class="carousel-btn" id="prevBtn">←</button>
+      <button class="carousel-btn" id="prevBtn"><i class="ph ph-arrow-left"></i></button>
       <div class="carousel-dots" id="carouselDots"></div>
-      <button class="carousel-btn" id="nextBtn">→</button>
+      <button class="carousel-btn" id="nextBtn"><i class="ph ph-arrow-right"></i></button>
     </div>
   </div>
 </section>
@@ -665,11 +690,18 @@
   <div class="footer-inner">
     <div class="footer-grid">
       <div>
-        <div class="footer-logo">🥗 Nutri4Kids</div>
+        <div class="footer-logo">
+          <i class="ph ph-leaf ph-lg" style="color:var(--sage)"></i>
+          Nutri4Kids
+        </div>
         <p class="footer-tagline">Lancheiras saudáveis e gostosas para crianças de Uberlândia, MG. Feito com amor por uma nutricionista e mãe.</p>
         <div class="social-links" style="margin-top:20px">
-          <a href="https://wa.me/5534999999999" class="social-btn" target="_blank" title="WhatsApp">💬</a>
-          <a href="https://instagram.com/nutri4kids" class="social-btn" target="_blank" title="Instagram">📷</a>
+          <a href="https://wa.me/5534999999999" class="social-btn" target="_blank" title="WhatsApp">
+            <i class="ph ph-whatsapp-logo ph-lg"></i>
+          </a>
+          <a href="https://instagram.com/nutri4kids" class="social-btn" target="_blank" title="Instagram">
+            <i class="ph ph-instagram-logo ph-lg"></i>
+          </a>
         </div>
       </div>
       <div class="footer-col">
@@ -680,11 +712,13 @@
       </div>
       <div class="footer-col">
         <h4>Contato</h4>
-        <p>📍 Uberlândia, MG</p>
-        <a href="https://wa.me/5534999999999" target="_blank">📱 (34) 9 9999-9999</a>
-        <p>📧 contato@nutri4kids.com.br</p>
-        <p>🕐 Seg–Sex: 7h–18h</p>
-        <p>🕐 Sáb: 7h–12h</p>
+        <p><i class="ph ph-map-pin ph-sm"></i> Uberlândia, MG</p>
+        <a href="https://wa.me/5534999999999" target="_blank">
+          <i class="ph ph-phone ph-sm"></i> (34) 9 9999-9999
+        </a>
+        <p><i class="ph ph-envelope ph-sm"></i> contato@nutri4kids.com.br</p>
+        <p><i class="ph ph-clock ph-sm"></i> Seg–Sex: 7h–18h</p>
+        <p><i class="ph ph-clock ph-sm"></i> Sáb: 7h–12h</p>
       </div>
     </div>
     <div class="footer-bottom">
@@ -700,11 +734,14 @@
 <!-- DRAWER -->
 <div class="drawer" id="drawer">
   <div class="drawer-header">
-    <div class="drawer-title">🥗 Cardápio</div>
-    <button class="drawer-close" id="closeDrawerBtn">✕</button>
+    <div class="drawer-title">
+      <i class="ph ph-fork-knife ph-lg"></i> Cardápio
+    </div>
+    <button class="drawer-close" id="closeDrawerBtn">
+      <i class="ph ph-x"></i>
+    </button>
   </div>
   <div class="drawer-body" id="drawerBody">
-    <!-- Filters -->
     <div class="filter-section">
       <div class="filter-label">Filtros Alimentares</div>
       <div class="filter-chips" id="filterChips">
@@ -715,30 +752,23 @@
         <button class="filter-chip" data-filter="natural">Natural</button>
       </div>
     </div>
-
-    <!-- Neighborhood -->
     <div class="nbhood-section">
       <div class="filter-label">Bairro de Entrega</div>
       <select class="nbhood-select" id="nbhoodSelect">
         <option value="">Selecione seu bairro…</option>
       </select>
     </div>
-
-    <!-- Products -->
     <div id="productList"></div>
   </div>
   <div class="drawer-footer">
     <div class="cart-summary" id="cartSummary"></div>
     <button class="whatsapp-btn" id="whatsappBtn" disabled>
-      <span>💬</span> Finalizar Pedido no WhatsApp
+      <i class="ph ph-whatsapp-logo ph-lg"></i> Finalizar Pedido no WhatsApp
     </button>
   </div>
 </div>
 
 <script>
-// ────────────────────────────────────────
-// DATA
-// ────────────────────────────────────────
 const WHATSAPP_NUMBER = '5534999999999';
 
 const NEIGHBORHOODS = [
@@ -751,127 +781,30 @@ const NEIGHBORHOODS = [
 ];
 
 const PRODUCTS = [
-  {
-    id: 'eq_kids',
-    name: 'Lancheira Equilíbrio Kids',
-    desc: 'Frutas da estação, proteína grelhada, cereal integral e suco natural.',
-    price: 19.90,
-    tags: ['zero-lactose', 'organic'],
-  },
-  {
-    id: 'lancheira_vegan',
-    name: 'Lancheira Vegana Feliz',
-    desc: 'Húmus, pão integral, cenoura baby, mix de frutas e bebida vegetal.',
-    price: 21.90,
-    tags: ['vegan', 'gluten-free', 'organic'],
-  },
-  {
-    id: 'lancheira_proteina',
-    name: 'Lancheira Proteína Power',
-    desc: 'Ovo cozido, queijo cottage, torrada integral, tomate cereja e iogurte natural.',
-    price: 22.90,
-    tags: ['gluten-free'],
-  },
-  {
-    id: 'lancheira_fruta',
-    name: 'Lancheira Frutas & Castanhas',
-    desc: 'Salada de frutas tropicais, granola sem açúcar e castanha do Pará.',
-    price: 16.90,
-    tags: ['vegan', 'gluten-free', 'natural'],
-  },
-  {
-    id: 'suco_laranja',
-    name: 'Suco Natural de Laranja',
-    desc: 'Laranja pera espremida na hora, 300ml. Sem adição de açúcar.',
-    price: 8.00,
-    tags: ['natural', 'vegan', 'gluten-free'],
-  },
-  {
-    id: 'suco_misto',
-    name: 'Suco Verde Detox Kids',
-    desc: 'Maçã, couve, limão e gengibre. Suave e refrescante, 300ml.',
-    price: 9.00,
-    tags: ['natural', 'vegan', 'organic', 'gluten-free'],
-  },
-  {
-    id: 'bolinho_bana',
-    name: 'Bolinho de Banana Integral',
-    desc: 'Feito com farinha integral, banana madura e canela. Sem açúcar refinado.',
-    price: 7.50,
-    tags: ['organic', 'natural'],
-  },
-  {
-    id: 'iogurte_frutas',
-    name: 'Iogurte com Granola & Frutas',
-    desc: 'Iogurte natural integral com granola artesanal e frutas frescas.',
-    price: 10.50,
-    tags: ['organic', 'gluten-free'],
-  },
+  { id: 'eq_kids', name: 'Lancheira Equilíbrio Kids', desc: 'Frutas da estação, proteína grelhada, cereal integral e suco natural.', price: 19.90, tags: ['zero-lactose', 'organic'] },
+  { id: 'lancheira_vegan', name: 'Lancheira Vegana Feliz', desc: 'Húmus, pão integral, cenoura baby, mix de frutas e bebida vegetal.', price: 21.90, tags: ['vegan', 'gluten-free', 'organic'] },
+  { id: 'lancheira_proteina', name: 'Lancheira Proteína Power', desc: 'Ovo cozido, queijo cottage, torrada integral, tomate cereja e iogurte natural.', price: 22.90, tags: ['gluten-free'] },
+  { id: 'lancheira_fruta', name: 'Lancheira Frutas & Castanhas', desc: 'Salada de frutas tropicais, granola sem açúcar e castanha do Pará.', price: 16.90, tags: ['vegan', 'gluten-free', 'natural'] },
+  { id: 'suco_laranja', name: 'Suco Natural de Laranja', desc: 'Laranja pera espremida na hora, 300ml. Sem adição de açúcar.', price: 8.00, tags: ['natural', 'vegan', 'gluten-free'] },
+  { id: 'suco_misto', name: 'Suco Verde Detox Kids', desc: 'Maçã, couve, limão e gengibre. Suave e refrescante, 300ml.', price: 9.00, tags: ['natural', 'vegan', 'organic', 'gluten-free'] },
+  { id: 'bolinho_bana', name: 'Bolinho de Banana Integral', desc: 'Feito com farinha integral, banana madura e canela. Sem açúcar refinado.', price: 7.50, tags: ['organic', 'natural'] },
+  { id: 'iogurte_frutas', name: 'Iogurte com Granola & Frutas', desc: 'Iogurte natural integral com granola artesanal e frutas frescas.', price: 10.50, tags: ['organic', 'gluten-free'] },
 ];
 
 const TESTIMONIALS = [
-  {
-    name: 'Camila Souza',
-    role: 'Mãe de 2 filhos',
-    text: 'Meus filhos amam a lancheira! Antes era batalha toda manhã, agora eles mesmos já perguntam se veio a lancheira da Nutri4Kids.',
-    stars: 5,
-    emoji: '👩',
-  },
-  {
-    name: 'Ricardo e Patrícia Lima',
-    role: 'Pais de gêmeos',
-    text: 'Praticidade incrível. Com a rotina corrida, saber que a alimentação deles está nas mãos de uma nutricionista nos dá muita tranquilidade.',
-    stars: 5,
-    emoji: '👨‍👩‍👦‍👦',
-  },
-  {
-    name: 'Fernanda Alves',
-    role: 'Mãe de 3 filhos',
-    text: 'Minha filha tem intolerância à lactose e eles sempre capricham na lancheira dela. Recomendo para todas as mães do grupo da escola!',
-    stars: 5,
-    emoji: '👩‍🦱',
-  },
-  {
-    name: 'Marcos Rodrigues',
-    role: 'Pai solo',
-    text: 'Como pai solo, a Nutri4Kids salvou minha vida. Entrega pontual, comida deliciosa e meu filho melhorou muito a concentração na escola.',
-    stars: 5,
-    emoji: '👨',
-  },
-  {
-    name: 'Juliana Costa',
-    role: 'Mãe de 1 filho',
-    text: 'O Pedro era supercontra comer fruta. Com a lancheira deles, ele pede mais. O segredo é o capricho no jeito que apresentam os alimentos.',
-    stars: 5,
-    emoji: '👩‍🦰',
-  },
+  { name: 'Camila Souza', role: 'Mãe de 2 filhos', text: 'Meus filhos amam a lancheira! Antes era batalha toda manhã, agora eles mesmos já perguntam se veio a lancheira da Nutri4Kids.', stars: 5 },
+  { name: 'Ricardo e Patrícia Lima', role: 'Pais de gêmeos', text: 'Praticidade incrível. Com a rotina corrida, saber que a alimentação deles está nas mãos de uma nutricionista nos dá muita tranquilidade.', stars: 5 },
+  { name: 'Fernanda Alves', role: 'Mãe de 3 filhos', text: 'Minha filha tem intolerância à lactose e eles sempre capricham na lancheira dela. Recomendo para todas as mães do grupo da escola!', stars: 5 },
+  { name: 'Marcos Rodrigues', role: 'Pai solo', text: 'Como pai solo, a Nutri4Kids salvou minha vida. Entrega pontual, comida deliciosa e meu filho melhorou muito a concentração na escola.', stars: 5 },
+  { name: 'Juliana Costa', role: 'Mãe de 1 filho', text: 'O Pedro era supercontra comer fruta. Com a lancheira deles, ele pede mais. O segredo é o capricho no jeito que apresentam os alimentos.', stars: 5 },
 ];
 
-// ────────────────────────────────────────
-// STATE
-// ────────────────────────────────────────
-const state = {
-  activeFilters: new Set(),
-  neighborhood: null,
-  cart: {}, // id -> qty
-};
+const state = { activeFilters: new Set(), neighborhood: null, cart: {} };
 
-// ────────────────────────────────────────
-// HELPERS
-// ────────────────────────────────────────
 const fmt = (n) => n.toFixed(2).replace('.', ',');
+const getCartSubtotal = () => PRODUCTS.reduce((s, p) => s + (state.cart[p.id] || 0) * p.price, 0);
+const getCartCount = () => Object.values(state.cart).reduce((a, b) => a + b, 0);
 
-function getCartSubtotal() {
-  return PRODUCTS.reduce((sum, p) => sum + (state.cart[p.id] || 0) * p.price, 0);
-}
-
-function getCartCount() {
-  return Object.values(state.cart).reduce((a, b) => a + b, 0);
-}
-
-// ────────────────────────────────────────
-// NEIGHBORHOODS
-// ────────────────────────────────────────
 function populateNeighborhoods() {
   const sel = document.getElementById('nbhoodSelect');
   NEIGHBORHOODS.forEach(n => {
@@ -886,20 +819,12 @@ function populateNeighborhoods() {
   });
 }
 
-// ────────────────────────────────────────
-// FILTERS
-// ────────────────────────────────────────
 function initFilters() {
   document.querySelectorAll('.filter-chip').forEach(chip => {
     chip.addEventListener('click', () => {
       const f = chip.dataset.filter;
-      if (state.activeFilters.has(f)) {
-        state.activeFilters.delete(f);
-        chip.classList.remove('active');
-      } else {
-        state.activeFilters.add(f);
-        chip.classList.add('active');
-      }
+      state.activeFilters.has(f) ? state.activeFilters.delete(f) : state.activeFilters.add(f);
+      chip.classList.toggle('active', state.activeFilters.has(f));
       filterProducts();
     });
   });
@@ -909,18 +834,13 @@ function filterProducts() {
   PRODUCTS.forEach(p => {
     const card = document.getElementById(`pcard-${p.id}`);
     if (!card) return;
-    if (state.activeFilters.size === 0) {
-      card.classList.remove('hidden');
-    } else {
-      const match = [...state.activeFilters].every(f => p.tags.includes(f));
-      card.classList.toggle('hidden', !match);
-    }
+    if (state.activeFilters.size === 0) { card.classList.remove('hidden'); return; }
+    card.classList.toggle('hidden', ![...state.activeFilters].every(f => p.tags.includes(f)));
   });
 }
 
-// ────────────────────────────────────────
-// PRODUCTS
-// ────────────────────────────────────────
+const TAG_LABELS = { 'gluten-free': 'Sem Glúten', 'zero-lactose': 'Sem Lactose', vegan: 'Vegano', organic: 'Orgânico', natural: 'Natural' };
+
 function renderProducts() {
   const list = document.getElementById('productList');
   list.innerHTML = '';
@@ -933,66 +853,48 @@ function renderProducts() {
         <div class="product-info">
           <div class="product-name">${p.name}</div>
           <div class="product-desc">${p.desc}</div>
-          <div class="product-tags">${p.tags.map(t => `<span class="product-tag">${tagLabel(t)}</span>`).join('')}</div>
+          <div class="product-tags">${p.tags.map(t => `<span class="product-tag">${TAG_LABELS[t] || t}</span>`).join('')}</div>
         </div>
         <div class="product-price">R$ ${fmt(p.price)}</div>
       </div>
       <div class="qty-control">
-        <button class="qty-btn" data-action="dec" data-id="${p.id}">−</button>
+        <button class="qty-btn" data-action="dec" data-id="${p.id}"><i class="ph ph-minus"></i></button>
         <span class="qty-val" id="qty-${p.id}">0</span>
-        <button class="qty-btn" data-action="inc" data-id="${p.id}">+</button>
+        <button class="qty-btn" data-action="inc" data-id="${p.id}"><i class="ph ph-plus"></i></button>
         <span class="qty-subtotal" id="sub-${p.id}"></span>
-      </div>
-    `;
+      </div>`;
     list.appendChild(card);
   });
-
   list.addEventListener('click', e => {
     const btn = e.target.closest('[data-action]');
     if (!btn) return;
-    const id = btn.dataset.id;
-    const action = btn.dataset.action;
-    const current = state.cart[id] || 0;
-    if (action === 'inc') state.cart[id] = current + 1;
-    if (action === 'dec') state.cart[id] = Math.max(0, current - 1);
-    if (state.cart[id] === 0) delete state.cart[id];
+    const { id, action } = btn.dataset;
+    const cur = state.cart[id] || 0;
+    state.cart[id] = action === 'inc' ? cur + 1 : Math.max(0, cur - 1);
+    if (!state.cart[id]) delete state.cart[id];
     updateQtyDisplay(id);
     renderCart();
   });
 }
 
-function tagLabel(t) {
-  const map = {
-    'gluten-free': 'Sem Glúten',
-    'zero-lactose': 'Sem Lactose',
-    'vegan': 'Vegano',
-    'organic': 'Orgânico',
-    'natural': 'Natural',
-  };
-  return map[t] || t;
-}
-
 function updateQtyDisplay(id) {
   const qty = state.cart[id] || 0;
-  const qtyEl = document.getElementById(`qty-${id}`);
-  const subEl = document.getElementById(`sub-${id}`);
-  if (qtyEl) qtyEl.textContent = qty;
-  if (subEl) {
+  const qEl = document.getElementById(`qty-${id}`);
+  const sEl = document.getElementById(`sub-${id}`);
+  if (qEl) qEl.textContent = qty;
+  if (sEl) {
     const p = PRODUCTS.find(x => x.id === id);
-    subEl.textContent = qty > 0 ? `= R$ ${fmt(qty * p.price)}` : '';
+    sEl.textContent = qty > 0 ? `= R$ ${fmt(qty * p.price)}` : '';
   }
 }
 
-// ────────────────────────────────────────
-// CART
-// ────────────────────────────────────────
 function renderCart() {
   const summary = document.getElementById('cartSummary');
   const btn = document.getElementById('whatsappBtn');
   const badge = document.getElementById('cartBadge');
   const count = getCartCount();
   const subtotal = getCartSubtotal();
-  const fee = state.neighborhood ? state.neighborhood.fee : null;
+  const fee = state.neighborhood?.fee ?? null;
   const total = subtotal + (fee || 0);
 
   badge.textContent = count;
@@ -1015,94 +917,57 @@ function renderCart() {
     html += `<div class="cart-row"><span>Taxa (${state.neighborhood.name})</span><span>R$ ${fmt(fee)}</span></div>`;
     html += `<div class="cart-row total"><span>TOTAL</span><span>R$ ${fmt(total)}</span></div>`;
   } else {
-    html += `<div class="cart-row" style="color:var(--muted);font-size:.8rem"><span colspan="2">Selecione o bairro para calcular a taxa</span></div>`;
+    html += `<div class="cart-row" style="color:var(--muted);font-size:.8rem"><span>Selecione o bairro para calcular a taxa</span></div>`;
   }
   summary.innerHTML = html;
-
-  btn.disabled = count === 0 || !state.neighborhood;
+  btn.disabled = !state.neighborhood;
   btn.onclick = sendWhatsApp;
 }
 
-// ────────────────────────────────────────
-// WHATSAPP
-// ────────────────────────────────────────
 function sendWhatsApp() {
   const subtotal = getCartSubtotal();
   const fee = state.neighborhood.fee;
   const total = subtotal + fee;
-
   let lines = ['NOVO PEDIDO - Nutri4kids', ''];
   PRODUCTS.forEach(p => {
     const qty = state.cart[p.id];
-    if (!qty) return;
-    lines.push(`${qty}x ${p.name}  R$ ${fmt(qty * p.price)}`);
+    if (qty) lines.push(`${qty}x ${p.name}  R$ ${fmt(qty * p.price)}`);
   });
-  lines.push('');
-  lines.push('------------------------------------');
-  lines.push('');
-  lines.push(`Subtotal: R$ ${fmt(subtotal)}`);
-  lines.push(`Taxa (${state.neighborhood.name}): R$ ${fmt(fee)}`);
-  lines.push(`TOTAL: R$ ${fmt(total)}`);
-  lines.push('');
-  lines.push('------------------------------------');
-  lines.push('');
-  lines.push('Endereço: (preencher)');
-  lines.push('');
-  lines.push('Pagamento: Pix/Cartão/Dinheiro');
-
-  const text = encodeURIComponent(lines.join('\n'));
-  window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${text}`, '_blank');
+  lines.push('', '------------------------------------', '',
+    `Subtotal: R$ ${fmt(subtotal)}`,
+    `Taxa (${state.neighborhood.name}): R$ ${fmt(fee)}`,
+    `TOTAL: R$ ${fmt(total)}`,
+    '', '------------------------------------', '',
+    'Endereço: (preencher)', '',
+    'Pagamento: Pix/Cartão/Dinheiro');
+  window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(lines.join('\n'))}`, '_blank');
 }
 
-// ────────────────────────────────────────
-// DRAWER
-// ────────────────────────────────────────
 function initDrawer() {
   const overlay = document.getElementById('drawerOverlay');
   const drawer = document.getElementById('drawer');
-
-  function open() {
-    overlay.classList.add('open');
-    drawer.classList.add('open');
-    document.body.style.overflow = 'hidden';
-  }
-  function close() {
-    overlay.classList.remove('open');
-    drawer.classList.remove('open');
-    document.body.style.overflow = '';
-  }
-
-  ['openDrawerBtn', 'openDrawerBtn2'].forEach(id => {
-    const el = document.getElementById(id);
-    if (el) el.addEventListener('click', open);
-  });
+  const open = () => { overlay.classList.add('open'); drawer.classList.add('open'); document.body.style.overflow = 'hidden'; };
+  const close = () => { overlay.classList.remove('open'); drawer.classList.remove('open'); document.body.style.overflow = ''; };
+  ['openDrawerBtn', 'openDrawerBtn2'].forEach(id => document.getElementById(id)?.addEventListener('click', open));
   document.getElementById('closeDrawerBtn').addEventListener('click', close);
   overlay.addEventListener('click', close);
 }
 
-// ────────────────────────────────────────
-// TESTIMONIALS CAROUSEL
-// ────────────────────────────────────────
 function initCarousel() {
   const track = document.getElementById('carouselTrack');
   const dotsWrap = document.getElementById('carouselDots');
-
   TESTIMONIALS.forEach((t, i) => {
     const card = document.createElement('div');
     card.className = 'testimonial-card';
+    const stars = Array(t.stars).fill('<i class="ph ph-star ph-fill"></i>').join('');
     card.innerHTML = `
-      <div class="t-stars">${'★'.repeat(t.stars)}</div>
+      <div class="t-stars">${stars}</div>
       <p class="t-text">"${t.text}"</p>
       <div class="t-author">
-        <div class="t-avatar">${t.emoji}</div>
-        <div>
-          <div class="t-name">${t.name}</div>
-          <div class="t-role">${t.role}</div>
-        </div>
-      </div>
-    `;
+        <div class="t-avatar"><i class="ph ph-user ph-lg"></i></div>
+        <div><div class="t-name">${t.name}</div><div class="t-role">${t.role}</div></div>
+      </div>`;
     track.appendChild(card);
-
     const dot = document.createElement('button');
     dot.className = 'carousel-dot' + (i === 0 ? ' active' : '');
     dot.addEventListener('click', () => goTo(i));
@@ -1110,48 +975,34 @@ function initCarousel() {
   });
 
   let current = 0;
-
   function goTo(idx) {
     current = Math.max(0, Math.min(idx, TESTIMONIALS.length - 1));
-    const cardW = track.children[0]?.offsetWidth + 20 || 360;
+    const cardW = (track.children[0]?.offsetWidth || 320) + 20;
     track.style.transform = `translateX(-${current * cardW}px)`;
-    document.querySelectorAll('.carousel-dot').forEach((d, i) => {
-      d.classList.toggle('active', i === current);
-    });
+    document.querySelectorAll('.carousel-dot').forEach((d, i) => d.classList.toggle('active', i === current));
   }
 
   document.getElementById('prevBtn').addEventListener('click', () => goTo(current - 1));
   document.getElementById('nextBtn').addEventListener('click', () => goTo(current + 1));
 
-  // Swipe support
   let startX = 0;
   track.addEventListener('touchstart', e => { startX = e.touches[0].clientX; }, { passive: true });
   track.addEventListener('touchend', e => {
     const dx = e.changedTouches[0].clientX - startX;
     if (Math.abs(dx) > 40) goTo(dx < 0 ? current + 1 : current - 1);
   });
-
   window.addEventListener('resize', () => goTo(current));
 }
 
-// ────────────────────────────────────────
-// INTERSECTION OBSERVER (fade-up)
-// ────────────────────────────────────────
 function initAnimations() {
   const els = document.querySelectorAll('.fade-up');
-  if (!window.IntersectionObserver) {
-    els.forEach(el => el.classList.add('visible'));
-    return;
-  }
-  const obs = new IntersectionObserver((entries) => {
+  if (!window.IntersectionObserver) { els.forEach(el => el.classList.add('visible')); return; }
+  const obs = new IntersectionObserver(entries => {
     entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
   }, { threshold: 0.12 });
   els.forEach(el => obs.observe(el));
 }
 
-// ────────────────────────────────────────
-// INIT
-// ────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
   populateNeighborhoods();
   initFilters();
